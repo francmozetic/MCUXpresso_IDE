@@ -503,20 +503,20 @@ int main(void)
 
     PRINTF("MQTT Client\r\n");
     PRINTF("IPv4 Address_____: %u.%u.%u.%u\r\n",
-    		((u8_t *)&fsl_netif0_ipaddr)[0],
-			((u8_t *)&fsl_netif0_ipaddr)[1],
-			((u8_t *)&fsl_netif0_ipaddr)[2],
-			((u8_t *)&fsl_netif0_ipaddr)[3]);
+    	((u8_t *)&fsl_netif0_ipaddr)[0],
+		((u8_t *)&fsl_netif0_ipaddr)[1],
+		((u8_t *)&fsl_netif0_ipaddr)[2],
+		((u8_t *)&fsl_netif0_ipaddr)[3]);
     PRINTF("IPv4 Subnet mask_: %u.%u.%u.%u\r\n",
-    		((u8_t *)&fsl_netif0_netmask)[0],
-			((u8_t *)&fsl_netif0_netmask)[1],
-			((u8_t *)&fsl_netif0_netmask)[2],
-			((u8_t *)&fsl_netif0_netmask)[3]);
+    	((u8_t *)&fsl_netif0_netmask)[0],
+		((u8_t *)&fsl_netif0_netmask)[1],
+		((u8_t *)&fsl_netif0_netmask)[2],
+		((u8_t *)&fsl_netif0_netmask)[3]);
     PRINTF("IPv4 Gateway_____: %u.%u.%u.%u\r\n",
-    		((u8_t *)&fsl_netif0_gw)[0],
-			((u8_t *)&fsl_netif0_gw)[1],
-			((u8_t *)&fsl_netif0_gw)[2],
-			((u8_t *)&fsl_netif0_gw)[3]);
+    	((u8_t *)&fsl_netif0_gw)[0],
+		((u8_t *)&fsl_netif0_gw)[1],
+		((u8_t *)&fsl_netif0_gw)[2],
+		((u8_t *)&fsl_netif0_gw)[3]);
 
 	PRINTF("ADC16 conversion samples.\r\n");
 
