@@ -253,8 +253,7 @@ static void mqtt_task1(void *pvParameters)
 
     if (client1 != NULL)
     {
-        ip_addr_t *ip_addr;
-        ip_addr = (ip_addr_t *)mem_malloc(sizeof(ip_addr_t));
+        ip_addr_t *ip_addr = (ip_addr_t *)mem_malloc(sizeof(ip_addr_t));
         ip_addr->addr = ipaddr_addr("192.168.1.3");
 
     	/* Setup an empty client info structure and dynamically allocate memory for it. */
@@ -308,15 +307,11 @@ static void mqtt_incoming_data_cb(void *arg, const u8_t *data, u16_t length, u8_
 		}
 		PRINTF("ADC16 conversion init.\r\n");
 
-		int i = 0;
-
-		while (i < 5000) {
+	    for (int i=0; i<5000; ++i) {
 			conversionCompleted = false;
 			ADC16_SetChannelConfig(DEMO_ADC16_BASE, DEMO_ADC16_CHANNEL_GROUP, &adc16ChannelConfigStruct);
-			while (!conversionCompleted) {
-			}
+			while (!conversionCompleted) {}
 			adcValues[i] = adcValue;
-			i++;
 		}
 
 		PRINTF("ADC16 conversion finished.\r\n");
@@ -326,7 +321,7 @@ static void mqtt_incoming_data_cb(void *arg, const u8_t *data, u16_t length, u8_
 		u8_t qos = 1;
 		u8_t retain = 0;
 
-		i = 0;
+		int i = 0;
 
 		sprintf(bytestr, "0 25000 1000");
 		while (i < 1000) {
@@ -427,8 +422,7 @@ static void mqtt_task2(void *pvParameters)
 
     if (client2 != NULL)
     {
-        ip_addr_t *ip_addr;
-        ip_addr = (ip_addr_t *)mem_malloc(sizeof(ip_addr_t));
+        ip_addr_t *ip_addr = (ip_addr_t *)mem_malloc(sizeof(ip_addr_t));
         ip_addr->addr = ipaddr_addr("192.168.1.3");
 
     	/* Setup an empty client info structure and dynamically allocate memory for it. */
@@ -465,7 +459,7 @@ int main(void)
 	static struct netif fsl_netif0;
 	ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
 
-    BOARD_InitPins();
+	BOARD_InitPins();
     BOARD_BootClockRUN();
     BOARD_InitDebugConsole();
 
