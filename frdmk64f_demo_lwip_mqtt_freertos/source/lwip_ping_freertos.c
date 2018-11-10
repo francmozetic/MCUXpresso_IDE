@@ -3,7 +3,6 @@
 #if LWIP_IPV4 && LWIP_RAW && LWIP_SOCKET
 
 #include "lwip/tcpip.h"
-#include "lwip/dhcp.h"
 #include "netif/ethernet.h"
 #include "ethernetif.h"
 #include "lwip/apps/mqtt.h"
@@ -482,17 +481,17 @@ int main(void)
     netif_set_up(&fsl_netif0);
 
     PRINTF("MQTT Client\r\n");
-    PRINTF("IPv4 Address     : %u.%u.%u.%u\r\n",
+    PRINTF("IPv4 Address_____: %u.%u.%u.%u\r\n",
     		((u8_t *)&fsl_netif0_ipaddr)[0],
 			((u8_t *)&fsl_netif0_ipaddr)[1],
 			((u8_t *)&fsl_netif0_ipaddr)[2],
 			((u8_t *)&fsl_netif0_ipaddr)[3]);
-    PRINTF("IPv4 Subnet mask : %u.%u.%u.%u\r\n",
+    PRINTF("IPv4 Subnet mask_: %u.%u.%u.%u\r\n",
     		((u8_t *)&fsl_netif0_netmask)[0],
 			((u8_t *)&fsl_netif0_netmask)[1],
 			((u8_t *)&fsl_netif0_netmask)[2],
 			((u8_t *)&fsl_netif0_netmask)[3]);
-    PRINTF("IPv4 Gateway     : %u.%u.%u.%u\r\n",
+    PRINTF("IPv4 Gateway_____: %u.%u.%u.%u\r\n",
     		((u8_t *)&fsl_netif0_gw)[0],
 			((u8_t *)&fsl_netif0_gw)[1],
 			((u8_t *)&fsl_netif0_gw)[2],
@@ -572,9 +571,7 @@ int main(void)
     	}
 	}
 
-    int i = 0;
-
-    while (i < 5000) {
+    for (int i=0; i<5000; ++i) {
     	conversionCompleted = false;
     	ADC16_SetChannelConfig(DEMO_ADC16_BASE, DEMO_ADC16_CHANNEL_GROUP, &adc16ChannelConfigStruct);
     	while (!conversionCompleted) {
@@ -584,12 +581,11 @@ int main(void)
     	D0val = (int)(adcValue * (330000.0 / 65536.0));
         sprintf(adcstr, " %d.%05d", D0val / 100000, D0val % 100000);
         strcat(bytestr, adcstr);
-		*
+
         D0val = (float)(adcValue * (3.300 / 65536.0));
         PRINTF("ADC16 decimal = %0.3f\r\n", D0val);
         PRINTF("ADC16 decimal = %d\r\n", D0val);
         PRINTF("ADC16 decimal = %d.%03d\r\n", D0val / 1000, D0val % 1000); */
-        i++;
     }
 
     count = 1;
