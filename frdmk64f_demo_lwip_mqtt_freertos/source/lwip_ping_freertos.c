@@ -35,9 +35,9 @@
 #if LWIP_IPV4 && LWIP_RAW && LWIP_SOCKET
 
 #include "lwip/tcpip.h"
+#include "lwip/apps/mqtt.h"
 #include "netif/ethernet.h"
 #include "ethernetif.h"
-#include "lwip/apps/mqtt.h"
 
 #include "board.h"
 #include "pin_mux.h"
@@ -258,7 +258,7 @@ static void mqtt_task1(void *pvParameters)
 
     	/* Setup an empty client info structure and dynamically allocate memory for it. */
     	struct mqtt_connect_client_info_t *ci =
-    			(struct mqtt_connect_client_info_t *)mem_malloc(sizeof(struct mqtt_connect_client_info_t));
+    		(struct mqtt_connect_client_info_t *)mem_malloc(sizeof(struct mqtt_connect_client_info_t));
     	memset(ci, 0, sizeof(struct mqtt_connect_client_info_t));
 
     	ci->client_id = "Klein2013";
