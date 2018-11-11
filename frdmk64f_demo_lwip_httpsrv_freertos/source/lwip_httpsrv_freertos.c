@@ -312,7 +312,7 @@ static void slave_task(void *pvParameters)
     SemaphoreHandle_t sem = (SemaphoreHandle_t)pvParameters;
 
     if (sem == NULL) { /* should not be NULL? */
-        for(;;) {}
+        for(;;){}
     }
 
     uint32_t counter = 0;
@@ -328,7 +328,7 @@ static void master_task(void *pvParameters)
 {
     SemaphoreHandle_t sem = NULL;
 
-    (void)pvParameters; /* parameter not used */
+    (void)pvParameters; /* parameters not used */
 
     sem = xSemaphoreCreateBinary();
     if (sem == NULL) { /* semaphore creation failed */
@@ -470,36 +470,36 @@ int main(void)
 
     count = 1;
     while (count != 0) {
-    	if (g_secsFlag == true) {
-    		LED_RED_TOGGLE();
-    		g_secsFlag = false;
-    		count = count - 1;
-    	}
-	}
+        if (g_secsFlag == true) {
+            LED_RED_TOGGLE();
+            g_secsFlag = false;
+            count = count - 1;
+        }
+    }
 
-	RTC_StopTimer(RTC);
+    RTC_StopTimer(RTC);
 
-	xTaskCreate(hello_task, "Hello", configMINIMAL_STACK_SIZE, NULL, helloTaskPriority, NULL);
+    xTaskCreate(hello_task, "Hello", configMINIMAL_STACK_SIZE, NULL, helloTaskPriority, NULL);
 
-    xTaskCreate(master_task, "Master", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
+    xTaskCreate(master_task, "Master", 500/sizeof(StackType_t), NULL, tskIDLE_PRIORITY+1, NULL);
 
     /* Initialize lwIP from thread. */
     #if USE_DHCP
-	if(sys_thread_new("main", dhcp_thread, NULL, HTTP_STACKSIZE, HTTP_PRIORITY) == NULL) {
-		LWIP_ASSERT("main(): Task creation failed.", 0);
-	}
+    if(sys_thread_new("main", dhcp_thread, NULL, HTTP_STACKSIZE, HTTP_PRIORITY) == NULL) {
+        LWIP_ASSERT("main(): Task creation failed.", 0);
+    }
     #else
-	if(sys_thread_new("main", main_thread, NULL, HTTP_STACKSIZE, HTTP_PRIORITY) == NULL) {
-		LWIP_ASSERT("main(): Task creation failed.", 0);
-	}
+    if(sys_thread_new("main", main_thread, NULL, HTTP_STACKSIZE, HTTP_PRIORITY) == NULL) {
+        LWIP_ASSERT("main(): Task creation failed.", 0);
+    }
     #endif
 
 	/* Start the real time scheduler. */
-    vTaskStartScheduler();
+	vTaskStartScheduler();
 
 	/* Will not get here unless a task calls vTaskEndScheduler(). */
 
-    return 0;
+	return 0;
 }
 
 #endif // LWIP_SOCKET
