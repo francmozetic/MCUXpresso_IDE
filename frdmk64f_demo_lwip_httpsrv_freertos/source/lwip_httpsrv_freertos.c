@@ -204,7 +204,7 @@ static void print_dhcp_state(struct netif *netif)
  */
 static void dhcp_init(void)
 {
-	static struct netif fsl_netif0; /* network interface structure */
+    static struct netif fsl_netif0; /* network interface structure */
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
 
     PRINTF("Setting interrupt priorities\r\n");
@@ -266,7 +266,7 @@ static void dhcp_thread(void *arg)
  */
 static void stack_init(void)
 {
-	static struct netif fsl_netif0;
+    static struct netif fsl_netif0;
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
 
     tcpip_init(NULL, NULL);
@@ -303,24 +303,23 @@ static void main_thread(void *arg)
 
 static void hello_task(void *pvParameters)
 {
-	PRINTF("Hello world.\r\n");
-	vTaskSuspend(NULL);
+    PRINTF("Hello world.\r\n");
+    vTaskSuspend(NULL);
 }
 
 static void slave_task(void *pvParameters)
 {
     SemaphoreHandle_t sem = (SemaphoreHandle_t)pvParameters;
-    uint32_t counter = 0;
 
-    if (sem == NULL) {
-        for(;;) {
-            /* should not be NULL? */
-        }
+    if (sem == NULL) { /* should not be NULL? */
+        for(;;) {}
     }
+
+    uint32_t counter = 0;
     for(;;) {
         if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) { /* block on semaphore */
-            counter++;
             PRINTF("xSemaphoreTake.\r\n");
+            counter++;
         }
     }
 }
@@ -420,45 +419,47 @@ int main(void)
     adc16ChannelConfigStruct.enableDifferentialConversion = false;
     #endif
 
-	/* Enable the clock to the PORT module that the LED is on. */
-	CLOCK_EnableClock(kCLOCK_PortB);
+    /* Enable the clock to the PORT module that the LED is on. */
+    CLOCK_EnableClock(kCLOCK_PortB);
 
-	// Setup the red LED pin as GPIO
-	PORT_SetPinMux(BOARD_LED_RED_GPIO_PORT, BOARD_LED_RED_GPIO_PIN, kPORT_MuxAsGpio);
-	PORT_SetPinMux(BOARD_LED_BLUE_GPIO_PORT, BOARD_LED_BLUE_GPIO_PIN, kPORT_MuxAsGpio);
+    // Setup the red LED pin as GPIO
+    PORT_SetPinMux(BOARD_LED_RED_GPIO_PORT, BOARD_LED_RED_GPIO_PIN, kPORT_MuxAsGpio);
+    PORT_SetPinMux(BOARD_LED_BLUE_GPIO_PORT, BOARD_LED_BLUE_GPIO_PIN, kPORT_MuxAsGpio);
 
-	// Initialize the RGB to ON/OFF condition
-	LED_RED_INIT(LOGIC_LED_OFF);
-	LED_BLUE_INIT(LOGIC_LED_OFF);
+    // Initialize the RGB to ON/OFF condition
+    LED_RED_INIT(LOGIC_LED_OFF);
+    LED_BLUE_INIT(LOGIC_LED_OFF);
 
-	int count = 1;
-	if (adc16ConfigStruct.clockDivider == kADC16_ClockDivider1) {
-		count = 2;
-	}
-	if (adc16ConfigStruct.clockDivider == kADC16_ClockDivider2) {
-		count = 4;
-	}
-	if (adc16ConfigStruct.clockDivider == kADC16_ClockDivider4) {
-		count = 8;
-	}
-	if (adc16ConfigStruct.clockDivider == kADC16_ClockDivider8) {
-		count = 16;
-	}
-	while (count != 0) {
-		if (g_secsFlag == true) {
-			LED_BLUE_TOGGLE();
-			g_secsFlag = false;
-			count = count - 1;
-		}
-	}
-	count = 1;
-	while (count != 0) {
-		if (g_secsFlag == true) {
-			LED_RED_TOGGLE();
-			g_secsFlag = false;
-			count = count - 1;
-		}
-	}
+    int count = 1;
+    if (adc16ConfigStruct.clockDivider == kADC16_ClockDivider1) {
+        count = 2;
+    }
+    if (adc16ConfigStruct.clockDivider == kADC16_ClockDivider2) {
+        count = 4;
+    }
+    if (adc16ConfigStruct.clockDivider == kADC16_ClockDivider4) {
+        count = 8;
+    }
+    if (adc16ConfigStruct.clockDivider == kADC16_ClockDivider8) {
+        count = 16;
+    }
+
+    while (count != 0) {
+        if (g_secsFlag == true) {
+            LED_BLUE_TOGGLE();
+            g_secsFlag = false;
+            count = count - 1;
+        }
+    }
+
+    count = 1;
+    while (count != 0) {
+        if (g_secsFlag == true) {
+            LED_RED_TOGGLE();
+            g_secsFlag = false;
+            count = count - 1;
+        }
+    }
 
     for (int i=0; i<10000; ++i) {
     	conversionCompleted = false;
@@ -480,7 +481,7 @@ int main(void)
 
 	xTaskCreate(hello_task, "Hello", configMINIMAL_STACK_SIZE, NULL, helloTaskPriority, NULL);
 
-    xTaskCreate(master_task, "Master", configMINIMAL_STACK_SIZE, NULL, helloTaskPriority, NULL);
+    xTaskCreate(master_task, "Master", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY+1, NULL);
 
     /* Initialize lwIP from thread. */
     #if USE_DHCP
