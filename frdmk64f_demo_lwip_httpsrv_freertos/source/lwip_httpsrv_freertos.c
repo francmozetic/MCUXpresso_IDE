@@ -190,9 +190,12 @@ static void print_dhcp_state(struct netif *netif)
 
        if (dhcp_last_state == DHCP_STATE_BOUND)
        {
-           PRINTF("IPv4 Address_____: %u.%u.%u.%u\r\n", ((u8_t *)&netif->ip_addr.addr)[0], ((u8_t *)&netif->ip_addr.addr)[1], ((u8_t *)&netif->ip_addr.addr)[2], ((u8_t *)&netif->ip_addr.addr)[3]);
-           PRINTF("IPv4 Subnet mask_: %u.%u.%u.%u\r\n", ((u8_t *)&netif->netmask.addr)[0], ((u8_t *)&netif->netmask.addr)[1], ((u8_t *)&netif->netmask.addr)[2], ((u8_t *)&netif->netmask.addr)[3]);
-           PRINTF("IPv4 Gateway_____: %u.%u.%u.%u\r\n\r\n", ((u8_t *)&netif->gw.addr)[0], ((u8_t *)&netif->gw.addr)[1], ((u8_t *)&netif->gw.addr)[2], ((u8_t *)&netif->gw.addr)[3]);
+           PRINTF("IPv4 Address_____: %u.%u.%u.%u", ((u8_t *)&netif->ip_addr.addr)[0], ((u8_t *)&netif->ip_addr.addr)[1],
+        		   ((u8_t *)&netif->ip_addr.addr)[2], ((u8_t *)&netif->ip_addr.addr)[3]);
+           PRINTF("IPv4 Subnet mask_: %u.%u.%u.%u", ((u8_t *)&netif->netmask.addr)[0], ((u8_t *)&netif->netmask.addr)[1],
+        		   ((u8_t *)&netif->netmask.addr)[2], ((u8_t *)&netif->netmask.addr)[3]);
+           PRINTF("IPv4 Gateway_____: %u.%u.%u.%u\r\n", ((u8_t *)&netif->gw.addr)[0], ((u8_t *)&netif->gw.addr)[1],
+        		   ((u8_t *)&netif->gw.addr)[2], ((u8_t *)&netif->gw.addr)[3]);
        }
    }
 }
@@ -239,9 +242,12 @@ static void dhcp_init(void)
     netif_set_default(&fsl_netif0);
     netif_set_up(&fsl_netif0);
 
-    LWIP_PLATFORM_DIAG(("IPv4 Address_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_ipaddr)[0], ((u8_t *)&fsl_netif0_ipaddr)[1], ((u8_t *)&fsl_netif0_ipaddr)[2], ((u8_t *)&fsl_netif0_ipaddr)[3]));
-    LWIP_PLATFORM_DIAG(("IPv4 Subnet mask_: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_netmask)[0], ((u8_t *)&fsl_netif0_netmask)[1], ((u8_t *)&fsl_netif0_netmask)[2], ((u8_t *)&fsl_netif0_netmask)[3]));
-    LWIP_PLATFORM_DIAG(("IPv4 Gateway_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_gw)[0], ((u8_t *)&fsl_netif0_gw)[1], ((u8_t *)&fsl_netif0_gw)[2], ((u8_t *)&fsl_netif0_gw)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Address_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_ipaddr)[0], ((u8_t *)&fsl_netif0_ipaddr)[1],
+    		((u8_t *)&fsl_netif0_ipaddr)[2], ((u8_t *)&fsl_netif0_ipaddr)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Subnet mask_: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_netmask)[0], ((u8_t *)&fsl_netif0_netmask)[1],
+    		((u8_t *)&fsl_netif0_netmask)[2], ((u8_t *)&fsl_netif0_netmask)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Gateway_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_gw)[0], ((u8_t *)&fsl_netif0_gw)[1],
+    		((u8_t *)&fsl_netif0_gw)[2], ((u8_t *)&fsl_netif0_gw)[3]));
 }
 
 /* @brief The main function containing server thread.
@@ -273,9 +279,12 @@ static void stack_init(void)
     netif_set_default(&fsl_netif0);
     netif_set_up(&fsl_netif0);
 
-    LWIP_PLATFORM_DIAG(("IPv4 Address_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_ipaddr)[0], ((u8_t *)&fsl_netif0_ipaddr)[1], ((u8_t *)&fsl_netif0_ipaddr)[2], ((u8_t *)&fsl_netif0_ipaddr)[3]));
-    LWIP_PLATFORM_DIAG(("IPv4 Subnet mask_: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_netmask)[0], ((u8_t *)&fsl_netif0_netmask)[1], ((u8_t *)&fsl_netif0_netmask)[2], ((u8_t *)&fsl_netif0_netmask)[3]));
-    LWIP_PLATFORM_DIAG(("IPv4 Gateway_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_gw)[0], ((u8_t *)&fsl_netif0_gw)[1], ((u8_t *)&fsl_netif0_gw)[2], ((u8_t *)&fsl_netif0_gw)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Address_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_ipaddr)[0], ((u8_t *)&fsl_netif0_ipaddr)[1],
+    		((u8_t *)&fsl_netif0_ipaddr)[2], ((u8_t *)&fsl_netif0_ipaddr)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Subnet mask_: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_netmask)[0], ((u8_t *)&fsl_netif0_netmask)[1],
+    		((u8_t *)&fsl_netif0_netmask)[2], ((u8_t *)&fsl_netif0_netmask)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Gateway_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_gw)[0], ((u8_t *)&fsl_netif0_gw)[1],
+    		((u8_t *)&fsl_netif0_gw)[2], ((u8_t *)&fsl_netif0_gw)[3]));
 }
 
 /* @brief The main function containing server thread.
@@ -298,6 +307,47 @@ static void hello_task(void *pvParameters)
 	vTaskSuspend(NULL);
 }
 
+static void slave_task(void *pvParameters)
+{
+    SemaphoreHandle_t sem = (SemaphoreHandle_t)pvParameters;
+    uint32_t counter = 0;
+
+    if (sem == NULL) {
+        for(;;) {
+            /* should not be NULL? */
+        }
+    }
+    for(;;) {
+        if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) { /* block on semaphore */
+            counter++;
+            PRINTF("xSemaphoreTake.\r\n");
+        }
+    }
+}
+
+static void master_task(void *pvParameters)
+{
+    SemaphoreHandle_t sem = NULL;
+
+    (void)pvParameters; /* parameter not used */
+
+    sem = xSemaphoreCreateBinary();
+    if (sem == NULL) { /* semaphore creation failed */
+        for(;;){} /* error */
+    }
+    vQueueAddToRegistry(sem, "IPC_Sem");
+
+    /* create slave task */
+    if (xTaskCreate(slave_task, "Slave", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+        for(;;){} /* error */
+    }
+
+    for(;;) {
+        (void)xSemaphoreGive(sem); /* give control to other task */
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+}
+
 /* @brief Main function.
  */
 int main(void)
@@ -312,32 +362,32 @@ int main(void)
     rtc_config_t rtcConfig;
     rtc_datetime_t date;
 
-	RTC_GetDefaultConfig(&rtcConfig);
+    RTC_GetDefaultConfig(&rtcConfig);
 
-	/* Ungates the RTC clock and configures the peripheral for basic operation. */
-	RTC_Init(RTC, &rtcConfig);
+    /* Ungates the RTC clock and configures the peripheral for basic operation. */
+    RTC_Init(RTC, &rtcConfig);
 
-	/* Select RTC clock source. */
-	SetRtcClockSource();
+    /* Select RTC clock source. */
+    SetRtcClockSource();
 
-	RTC_StopTimer(RTC);
+    RTC_StopTimer(RTC);
 
-	date.year = 2018U;
-	date.month = 11U;
-	date.day = 7U;
-	date.hour = 0U;
-	date.minute = 0U;
-	date.second = 0U;
+    date.year = 2018U;
+    date.month = 11U;
+    date.day = 7U;
+    date.hour = 0U;
+    date.minute = 0U;
+    date.second = 0U;
 
-	RTC_SetDatetime(RTC, &date);
+    RTC_SetDatetime(RTC, &date);
 
-	NVIC_EnableIRQ(RTC_Seconds_IRQn);
+    NVIC_EnableIRQ(RTC_Seconds_IRQn);
 
-	RTC_StartTimer(RTC);
+    RTC_StartTimer(RTC);
 
-	RTC_EnableInterrupts(RTC, kRTC_SecondsInterruptEnable);
+    RTC_EnableInterrupts(RTC, kRTC_SecondsInterruptEnable);
 
-	PRINTF("ADC16 conversion samples.\r\n");
+    PRINTF("ADC16 conversion samples.\r\n");
 
     adc16ConfigStruct.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
     adc16ConfigStruct.clockSource = kADC16_ClockSourceAsynchronousClock;
@@ -355,20 +405,20 @@ int main(void)
 
     ADC16_EnableHardwareTrigger(DEMO_ADC16_BASE, false);
 
-	#if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
+    #if defined(FSL_FEATURE_ADC16_HAS_CALIBRATION) && FSL_FEATURE_ADC16_HAS_CALIBRATION
     if (kStatus_Success == ADC16_DoAutoCalibration(DEMO_ADC16_BASE)) {
-    	PRINTF("ADC16 auto calibration successful.\r\n");
+        PRINTF("ADC16 auto calibration successful.\r\n");
     }
     else {
-    	PRINTF("ADC16 auto calibration failed.\r\n");
+      	PRINTF("ADC16 auto calibration failed.\r\n");
     }
-	#endif
+    #endif
 
     adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
     adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
-	#if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
-    	adc16ChannelConfigStruct.enableDifferentialConversion = false;
-	#endif
+    #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
+    adc16ChannelConfigStruct.enableDifferentialConversion = false;
+    #endif
 
 	/* Enable the clock to the PORT module that the LED is on. */
 	CLOCK_EnableClock(kCLOCK_PortB);
@@ -430,16 +480,18 @@ int main(void)
 
 	xTaskCreate(hello_task, "Hello", configMINIMAL_STACK_SIZE, NULL, helloTaskPriority, NULL);
 
+    xTaskCreate(master_task, "Master", configMINIMAL_STACK_SIZE, NULL, helloTaskPriority, NULL);
+
     /* Initialize lwIP from thread. */
-#if USE_DHCP
+    #if USE_DHCP
 	if(sys_thread_new("main", dhcp_thread, NULL, HTTP_STACKSIZE, HTTP_PRIORITY) == NULL) {
 		LWIP_ASSERT("main(): Task creation failed.", 0);
 	}
-#else
+    #else
 	if(sys_thread_new("main", main_thread, NULL, HTTP_STACKSIZE, HTTP_PRIORITY) == NULL) {
 		LWIP_ASSERT("main(): Task creation failed.", 0);
 	}
-#endif
+    #endif
 
 	/* Start the real time scheduler. */
     vTaskStartScheduler();
