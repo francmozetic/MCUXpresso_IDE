@@ -190,21 +190,9 @@ static void print_dhcp_state(struct netif *netif)
 
        if (dhcp_last_state == DHCP_STATE_BOUND)
        {
-           PRINTF("IPv4 Address_____: %u.%u.%u.%u\r\n",
-        		   ((u8_t *)&netif->ip_addr.addr)[0],
-				   ((u8_t *)&netif->ip_addr.addr)[1],
-				   ((u8_t *)&netif->ip_addr.addr)[2],
-                  ((u8_t *)&netif->ip_addr.addr)[3]);
-           PRINTF("IPv4 Subnet mask_: %u.%u.%u.%u\r\n",
-        		   ((u8_t *)&netif->netmask.addr)[0],
-				   ((u8_t *)&netif->netmask.addr)[1],
-				   ((u8_t *)&netif->netmask.addr)[2],
-                  ((u8_t *)&netif->netmask.addr)[3]);
-           PRINTF("IPv4 Gateway_____: %u.%u.%u.%u\r\n\r\n",
-        		   ((u8_t *)&netif->gw.addr)[0],
-				   ((u8_t *)&netif->gw.addr)[1],
-				   ((u8_t *)&netif->gw.addr)[2],
-				   ((u8_t *)&netif->gw.addr)[3]);
+           PRINTF("IPv4 Address_____: %u.%u.%u.%u\r\n", ((u8_t *)&netif->ip_addr.addr)[0], ((u8_t *)&netif->ip_addr.addr)[1], ((u8_t *)&netif->ip_addr.addr)[2], ((u8_t *)&netif->ip_addr.addr)[3]);
+           PRINTF("IPv4 Subnet mask_: %u.%u.%u.%u\r\n", ((u8_t *)&netif->netmask.addr)[0], ((u8_t *)&netif->netmask.addr)[1], ((u8_t *)&netif->netmask.addr)[2], ((u8_t *)&netif->netmask.addr)[3]);
+           PRINTF("IPv4 Gateway_____: %u.%u.%u.%u\r\n\r\n", ((u8_t *)&netif->gw.addr)[0], ((u8_t *)&netif->gw.addr)[1], ((u8_t *)&netif->gw.addr)[2], ((u8_t *)&netif->gw.addr)[3]);
        }
    }
 }
@@ -251,21 +239,9 @@ static void dhcp_init(void)
     netif_set_default(&fsl_netif0);
     netif_set_up(&fsl_netif0);
 
-    LWIP_PLATFORM_DIAG(("IPv4 Address_____: %u.%u.%u.%u",
-    					((u8_t *)&fsl_netif0_ipaddr)[0],
-                        ((u8_t *)&fsl_netif0_ipaddr)[1],
-						((u8_t *)&fsl_netif0_ipaddr)[2],
-                        ((u8_t *)&fsl_netif0_ipaddr)[3]));
-    LWIP_PLATFORM_DIAG(("IPv4 Subnet mask_: %u.%u.%u.%u",
-    					((u8_t *)&fsl_netif0_netmask)[0],
-                        ((u8_t *)&fsl_netif0_netmask)[1],
-						((u8_t *)&fsl_netif0_netmask)[2],
-                        ((u8_t *)&fsl_netif0_netmask)[3]));
-    LWIP_PLATFORM_DIAG(("IPv4 Gateway_____: %u.%u.%u.%u",
-    					((u8_t *)&fsl_netif0_gw)[0],
-						((u8_t *)&fsl_netif0_gw)[1],
-                        ((u8_t *)&fsl_netif0_gw)[2],
-						((u8_t *)&fsl_netif0_gw)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Address_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_ipaddr)[0], ((u8_t *)&fsl_netif0_ipaddr)[1], ((u8_t *)&fsl_netif0_ipaddr)[2], ((u8_t *)&fsl_netif0_ipaddr)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Subnet mask_: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_netmask)[0], ((u8_t *)&fsl_netif0_netmask)[1], ((u8_t *)&fsl_netif0_netmask)[2], ((u8_t *)&fsl_netif0_netmask)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Gateway_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_gw)[0], ((u8_t *)&fsl_netif0_gw)[1], ((u8_t *)&fsl_netif0_gw)[2], ((u8_t *)&fsl_netif0_gw)[3]));
 }
 
 /* @brief The main function containing server thread.
@@ -297,21 +273,9 @@ static void stack_init(void)
     netif_set_default(&fsl_netif0);
     netif_set_up(&fsl_netif0);
 
-    LWIP_PLATFORM_DIAG(("IPv4 Address_____: %u.%u.%u.%u",
-    					((u8_t *)&fsl_netif0_ipaddr)[0],
-                        ((u8_t *)&fsl_netif0_ipaddr)[1],
-						((u8_t *)&fsl_netif0_ipaddr)[2],
-                        ((u8_t *)&fsl_netif0_ipaddr)[3]));
-    LWIP_PLATFORM_DIAG(("IPv4 Subnet mask_: %u.%u.%u.%u",
-    					((u8_t *)&fsl_netif0_netmask)[0],
-                        ((u8_t *)&fsl_netif0_netmask)[1],
-						((u8_t *)&fsl_netif0_netmask)[2],
-                        ((u8_t *)&fsl_netif0_netmask)[3]));
-    LWIP_PLATFORM_DIAG(("IPv4 Gateway_____: %u.%u.%u.%u",
-    					((u8_t *)&fsl_netif0_gw)[0],
-						((u8_t *)&fsl_netif0_gw)[1],
-                        ((u8_t *)&fsl_netif0_gw)[2],
-						((u8_t *)&fsl_netif0_gw)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Address_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_ipaddr)[0], ((u8_t *)&fsl_netif0_ipaddr)[1], ((u8_t *)&fsl_netif0_ipaddr)[2], ((u8_t *)&fsl_netif0_ipaddr)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Subnet mask_: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_netmask)[0], ((u8_t *)&fsl_netif0_netmask)[1], ((u8_t *)&fsl_netif0_netmask)[2], ((u8_t *)&fsl_netif0_netmask)[3]));
+    LWIP_PLATFORM_DIAG(("IPv4 Gateway_____: %u.%u.%u.%u", ((u8_t *)&fsl_netif0_gw)[0], ((u8_t *)&fsl_netif0_gw)[1], ((u8_t *)&fsl_netif0_gw)[2], ((u8_t *)&fsl_netif0_gw)[3]));
 }
 
 /* @brief The main function containing server thread.
@@ -338,15 +302,15 @@ static void hello_task(void *pvParameters)
  */
 int main(void)
 {
-	SYSMPU_Type *base = SYSMPU;
-	BOARD_InitPins();
-	BOARD_BootClockRUN();
-	BOARD_InitDebugConsole();
-	/* Disable SYSMPU. */
-	base->CESR &= ~SYSMPU_CESR_VLD_MASK;
+    SYSMPU_Type *base = SYSMPU;
+    BOARD_InitPins();
+    BOARD_BootClockRUN();
+    BOARD_InitDebugConsole();
+    /* Disable SYSMPU. */
+    base->CESR &= ~SYSMPU_CESR_VLD_MASK;
 
-	rtc_config_t rtcConfig;
-	rtc_datetime_t date;
+    rtc_config_t rtcConfig;
+    rtc_datetime_t date;
 
 	RTC_GetDefaultConfig(&rtcConfig);
 
