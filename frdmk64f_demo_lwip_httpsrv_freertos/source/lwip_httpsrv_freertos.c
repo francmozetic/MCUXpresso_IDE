@@ -188,7 +188,7 @@ static void print_dhcp_state(struct netif *netif)
         		   ((u8_t *)&netif->ip_addr.addr)[2], ((u8_t *)&netif->ip_addr.addr)[3]);
            PRINTF("IPv4 Subnet mask_: %u.%u.%u.%u", ((u8_t *)&netif->netmask.addr)[0], ((u8_t *)&netif->netmask.addr)[1],
         		   ((u8_t *)&netif->netmask.addr)[2], ((u8_t *)&netif->netmask.addr)[3]);
-           PRINTF("IPv4 Gateway_____: %u.%u.%u.%u\r\n", ((u8_t *)&netif->gw.addr)[0], ((u8_t *)&netif->gw.addr)[1],
+           PRINTF("IPv4 Gateway_____: %u.%u.%u.%u", ((u8_t *)&netif->gw.addr)[0], ((u8_t *)&netif->gw.addr)[1],
         		   ((u8_t *)&netif->gw.addr)[2], ((u8_t *)&netif->gw.addr)[3]);
        }
    }
@@ -219,8 +219,7 @@ static void dhcp_init(void)
 
     dhcp_start(&fsl_netif0);
 
-    while (1)
-    {
+    for(;;) {
         /* Poll the driver and get any outstanding frames. */
         ethernetif_input(&fsl_netif0);
 
@@ -312,6 +311,12 @@ static void light1_task(void *pvParameters)
     /* it's an infinite loop */
     for(;;) {
         if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) {
+            for (int i=0; i<10000; ++i) {
+                conversionCompleted = false;
+                ADC16_SetChannelConfig(DEMO_ADC16_BASE, DEMO_ADC16_CHANNEL_GROUP, &adc16ChannelConfigStruct);
+                while (!conversionCompleted) {}
+                adcValues[i] = adcValue;
+            }
             PRINTF("xSemaphoreTake #1.\r\n");
         }
     }
@@ -328,6 +333,12 @@ static void light2_task(void *pvParameters)
     /* it's an infinite loop */
     for(;;) {
         if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) {
+            for (int i=0; i<10000; ++i) {
+                conversionCompleted = false;
+                ADC16_SetChannelConfig(DEMO_ADC16_BASE, DEMO_ADC16_CHANNEL_GROUP, &adc16ChannelConfigStruct);
+                while (!conversionCompleted) {}
+                adcValues[i] = adcValue;
+            }
             PRINTF("xSemaphoreTake #2.\r\n");
         }
     }
@@ -344,6 +355,12 @@ static void light3_task(void *pvParameters)
     /* it's an infinite loop */
     for(;;) {
         if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) {
+            for (int i=0; i<10000; ++i) {
+                conversionCompleted = false;
+                ADC16_SetChannelConfig(DEMO_ADC16_BASE, DEMO_ADC16_CHANNEL_GROUP, &adc16ChannelConfigStruct);
+                while (!conversionCompleted) {}
+                adcValues[i] = adcValue;
+            }
             PRINTF("xSemaphoreTake #3.\r\n");
         }
     }
@@ -421,7 +438,7 @@ int main(void)
     adc16ConfigStruct.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
     adc16ConfigStruct.clockSource = kADC16_ClockSourceAsynchronousClock;
     adc16ConfigStruct.enableAsynchronousClock = true;
-    adc16ConfigStruct.clockDivider = kADC16_ClockDivider1;
+    adc16ConfigStruct.clockDivider = kADC16_ClockDivider2;
     adc16ConfigStruct.resolution = kADC16_Resolution16Bit;
     adc16ConfigStruct.longSampleMode = kADC16_LongSampleDisabled;
     adc16ConfigStruct.enableHighSpeed = false;
