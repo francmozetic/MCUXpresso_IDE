@@ -544,12 +544,12 @@ int main(void)
     }
     #endif
 
-	/* Start the real time scheduler. */
-	vTaskStartScheduler();
+    /* Start the real time scheduler. */
+    vTaskStartScheduler();
 
-	/* Will not get here unless a task calls vTaskEndScheduler(). */
+    /* Will not get here unless a task calls vTaskEndScheduler(). */
 
-	return 0;
+    return 0;
 }
 
 #endif // LWIP_SOCKET
