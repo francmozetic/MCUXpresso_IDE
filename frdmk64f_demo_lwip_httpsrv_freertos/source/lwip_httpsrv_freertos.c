@@ -95,9 +95,6 @@
 #ifndef HTTP_PRIORITY
 #define HTTP_PRIORITY DEFAULT_THREAD_PRIO
 #endif
-#ifndef DEBUG_WS
-#define DEBUG_WS 0
-#endif
 
 volatile uint32_t adcValue = 0;
 volatile bool g_secsFlag = false;
@@ -448,10 +445,11 @@ int main(void)
 
     adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
     adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
-    PRINTF("ADC16 enable interrupt on conversion completed.\r\n");
     #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     adc16ChannelConfigStruct.enableDifferentialConversion = false;
     #endif
+
+    PRINTF("ADC16 enable interrupt on conversion completed.\r\n");
 
     /* Enable the clock to the PORT module that the LED is on. */
     CLOCK_EnableClock(kCLOCK_PortB);
