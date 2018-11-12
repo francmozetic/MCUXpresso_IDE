@@ -307,42 +307,78 @@ static void hello_task(void *pvParameters)
     vTaskSuspend(NULL);
 }
 
-static void slave_task(void *pvParameters)
+static void slave_task1(void *pvParameters)
 {
     SemaphoreHandle_t sem = (SemaphoreHandle_t)pvParameters;
 
-    if (sem == NULL) { /* should not be NULL? */
+    if (sem == NULL) { /* should not be NULL */
         for(;;){}
     }
 
-    uint32_t counter = 0;
+    /* it's an infinite loop */
     for(;;) {
         if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) { /* block on semaphore */
-            PRINTF("xSemaphoreTake.\r\n");
-            counter++;
+            PRINTF("xSemaphoreTake #1.\r\n");
+        }
+    }
+}
+
+static void slave_task2(void *pvParameters)
+{
+    SemaphoreHandle_t sem = (SemaphoreHandle_t)pvParameters;
+
+    if (sem == NULL) { /* should not be NULL */
+        for(;;){}
+    }
+
+    /* it's an infinite loop */
+    for(;;) {
+        if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) { /* block on semaphore */
+            PRINTF("xSemaphoreTake #2.\r\n");
+        }
+    }
+}
+
+static void slave_task3(void *pvParameters)
+{
+    SemaphoreHandle_t sem = (SemaphoreHandle_t)pvParameters;
+
+    if (sem == NULL) { /* should not be NULL */
+        for(;;){}
+    }
+
+    /* it's an infinite loop */
+    for(;;) {
+        if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) { /* block on semaphore */
+            PRINTF("xSemaphoreTake #3.\r\n");
         }
     }
 }
 
 static void master_task(void *pvParameters)
 {
-    SemaphoreHandle_t sem = NULL;
-
     (void)pvParameters; /* parameters not used */
 
-    sem = xSemaphoreCreateBinary();
+    SemaphoreHandle_t sem = xSemaphoreCreateBinary();
     if (sem == NULL) { /* semaphore creation failed */
         for(;;){} /* error */
     }
     vQueueAddToRegistry(sem, "IPC_Sem");
 
-    /* create slave task */
-    if (xTaskCreate(slave_task, "Slave", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+    if (xTaskCreate(slave_task1, "Slave", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
         for(;;){} /* error */
     }
+    if (xTaskCreate(slave_task2, "Slave", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+        for(;;){} /* error */
+    }
+    if (xTaskCreate(slave_task3, "Slave", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+        for(;;){} /* error */
+    }
+    vTaskDelay(pdMS_TO_TICKS(100));
 
+    /* it's an infinite loop */
     for(;;) {
-        (void)xSemaphoreGive(sem); /* give control to other task */
+        (void)xSemaphoreGive(sem); /* give control to other tasks */
         vTaskDelay(pdMS_TO_TICKS(1000));
     }
 }
