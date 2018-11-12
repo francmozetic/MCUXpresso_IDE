@@ -89,9 +89,6 @@
 #define helloTaskPriority (configMAX_PRIORITIES - 1)
 #define mqttTaskPriority (configMAX_PRIORITIES - 1)
 
-#ifndef HTTPD_DEBUG
-#define HTTPD_DEBUG LWIP_DBG_ON
-#endif
 #ifndef HTTP_STACKSIZE
 #define HTTP_STACKSIZE DEFAULT_THREAD_STACKSIZE
 #endif
@@ -427,7 +424,7 @@ int main(void)
     adc16ConfigStruct.referenceVoltageSource = kADC16_ReferenceVoltageSourceVref;
     adc16ConfigStruct.clockSource = kADC16_ClockSourceAsynchronousClock;
     adc16ConfigStruct.enableAsynchronousClock = true;
-    adc16ConfigStruct.clockDivider = kADC16_ClockDivider4;
+    adc16ConfigStruct.clockDivider = kADC16_ClockDivider1;
     adc16ConfigStruct.resolution = kADC16_Resolution16Bit;
     adc16ConfigStruct.longSampleMode = kADC16_LongSampleDisabled;
     adc16ConfigStruct.enableHighSpeed = false;
@@ -451,6 +448,7 @@ int main(void)
 
     adc16ChannelConfigStruct.channelNumber = DEMO_ADC16_USER_CHANNEL;
     adc16ChannelConfigStruct.enableInterruptOnConversionCompleted = true;
+    PRINTF("ADC16 enable interrupt on conversion completed.\r\n");
     #if defined(FSL_FEATURE_ADC16_HAS_DIFF_MODE) && FSL_FEATURE_ADC16_HAS_DIFF_MODE
     adc16ChannelConfigStruct.enableDifferentialConversion = false;
     #endif
