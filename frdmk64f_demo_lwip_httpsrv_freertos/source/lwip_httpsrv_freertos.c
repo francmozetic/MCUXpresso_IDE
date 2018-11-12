@@ -307,7 +307,7 @@ static void hello_task(void *pvParameters)
     vTaskSuspend(NULL);
 }
 
-static void slave_task1(void *pvParameters)
+static void light1_task(void *pvParameters)
 {
     SemaphoreHandle_t sem = (SemaphoreHandle_t)pvParameters;
 
@@ -317,13 +317,13 @@ static void slave_task1(void *pvParameters)
 
     /* it's an infinite loop */
     for(;;) {
-        if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) { /* block on semaphore */
+        if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) {
             PRINTF("xSemaphoreTake #1.\r\n");
         }
     }
 }
 
-static void slave_task2(void *pvParameters)
+static void light2_task(void *pvParameters)
 {
     SemaphoreHandle_t sem = (SemaphoreHandle_t)pvParameters;
 
@@ -333,13 +333,13 @@ static void slave_task2(void *pvParameters)
 
     /* it's an infinite loop */
     for(;;) {
-        if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) { /* block on semaphore */
+        if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) {
             PRINTF("xSemaphoreTake #2.\r\n");
         }
     }
 }
 
-static void slave_task3(void *pvParameters)
+static void light3_task(void *pvParameters)
 {
     SemaphoreHandle_t sem = (SemaphoreHandle_t)pvParameters;
 
@@ -349,7 +349,7 @@ static void slave_task3(void *pvParameters)
 
     /* it's an infinite loop */
     for(;;) {
-        if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) { /* block on semaphore */
+        if (xSemaphoreTake(sem, portMAX_DELAY) == pdPASS) {
             PRINTF("xSemaphoreTake #3.\r\n");
         }
     }
@@ -365,13 +365,13 @@ static void master_task(void *pvParameters)
     }
     vQueueAddToRegistry(sem, "IPC_Sem");
 
-    if (xTaskCreate(slave_task1, "Slave", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+    if (xTaskCreate(light1_task, "Light", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
         for(;;){} /* error */
     }
-    if (xTaskCreate(slave_task2, "Slave", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+    if (xTaskCreate(light2_task, "Light", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
         for(;;){} /* error */
     }
-    if (xTaskCreate(slave_task3, "Slave", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
+    if (xTaskCreate(light3_task, "Light", 500/sizeof(StackType_t), sem, tskIDLE_PRIORITY+1, NULL) != pdPASS) {
         for(;;){} /* error */
     }
     vTaskDelay(pdMS_TO_TICKS(100));
