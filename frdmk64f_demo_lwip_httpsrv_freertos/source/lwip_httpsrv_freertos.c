@@ -53,7 +53,7 @@
 /*************************************************************************************************
  --> Definitions
  *************************************************************************************************/
-#define USE_DHCP	0
+#define USE_DHCP 0
 
 /* IP address configuration. */
 #define configIP_ADDR0 192
@@ -89,11 +89,11 @@
 #define helloTaskPriority (configMAX_PRIORITIES - 1)
 #define mqttTaskPriority (configMAX_PRIORITIES - 1)
 
-#ifndef HTTP_STACKSIZE
-#define HTTP_STACKSIZE DEFAULT_THREAD_STACKSIZE
+#ifndef DEMO_STACKSIZE
+#define DEMO_STACKSIZE DEFAULT_THREAD_STACKSIZE
 #endif
-#ifndef HTTP_PRIORITY
-#define HTTP_PRIORITY DEFAULT_THREAD_PRIO
+#ifndef DEMO_PRIORITY
+#define DEMO_PRIORITY DEFAULT_THREAD_PRIO
 #endif
 
 volatile uint32_t adcValue = 0;
@@ -201,7 +201,7 @@ static void dhcp_init(void)
     static struct netif fsl_netif0; /* network interface structure */
     ip4_addr_t fsl_netif0_ipaddr, fsl_netif0_netmask, fsl_netif0_gw;
 
-    PRINTF("Setting interrupt priorities\r\n");
+    PRINTF("Setting interrupt priorities.\r\n");
     NVIC_SetPriority(ENET_1588_Timer_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
     NVIC_SetPriority(ENET_Transmit_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
     NVIC_SetPriority(ENET_Receive_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
@@ -212,7 +212,7 @@ static void dhcp_init(void)
     IP4_ADDR(&fsl_netif0_netmask, 0U, 0U, 0U, 0U);
     IP4_ADDR(&fsl_netif0_gw, 0U, 0U, 0U, 0U);
 
-    PRINTF("Adding interfaces\r\n");
+    PRINTF("Adding network interfaces.\r\n");
     netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, NULL, ethernetif_init, ethernet_input);
     netif_set_default(&fsl_netif0);
     netif_set_up(&fsl_netif0);
@@ -268,6 +268,7 @@ static void stack_init(void)
     IP4_ADDR(&fsl_netif0_netmask, configNET_MASK0, configNET_MASK1, configNET_MASK2, configNET_MASK3);
     IP4_ADDR(&fsl_netif0_gw, configGW_ADDR0, configGW_ADDR1, configGW_ADDR2, configGW_ADDR3);
 
+    PRINTF("Adding network interfaces.\r\n");
     netif_add(&fsl_netif0, &fsl_netif0_ipaddr, &fsl_netif0_netmask, &fsl_netif0_gw, NULL, ethernetif_init, tcpip_input);
     netif_set_default(&fsl_netif0);
     netif_set_up(&fsl_netif0);
@@ -534,11 +535,11 @@ int main(void)
 
     /* Initialize lwIP from thread. */
     #if USE_DHCP
-    if(sys_thread_new("main", dhcp_thread, NULL, HTTP_STACKSIZE, HTTP_PRIORITY) == NULL) {
+    if(sys_thread_new("main", dhcp_thread, NULL, DEMO_STACKSIZE, DEMO_PRIORITY) == NULL) {
         LWIP_ASSERT("main(): Task creation failed.", 0);
     }
     #else
-    if(sys_thread_new("main", main_thread, NULL, HTTP_STACKSIZE, HTTP_PRIORITY) == NULL) {
+    if(sys_thread_new("main", main_thread, NULL, DEMO_STACKSIZE, DEMO_PRIORITY) == NULL) {
         LWIP_ASSERT("main(): Task creation failed.", 0);
     }
     #endif
